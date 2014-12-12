@@ -1,10 +1,14 @@
 @extends ('master')
 
-@section('title')
-<title></title>
-@stop
-
 @section('content')
-<p>Home template</p>
+
+<p>Search for Games!</p>
+
+{{ Form::open() }}
+{{ Form::label('search', 'Search') }}
+{{ Form::text('search') }}
+{{ Form::submit('Search') }}
+{{ Form::close() }}
+
 @stop
 

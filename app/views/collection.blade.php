@@ -21,7 +21,7 @@
                 @foreach($games as $game)
                 <tr>
                     <td>{{ $game->title }}</td>
-                    <td>{{ $game->creator }}</td>
+                    <td>{{ $game->publisher }}</td>
                 </tr>
                 @endforeach
             </tbody>

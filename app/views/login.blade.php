@@ -7,7 +7,7 @@
 @section('content')
 <p>login</p>
 
-{{ Form::open(array('action' => 'UserController@login')) }}
+{{ Form::open(array('action' => 'UserController@post_login')) }}
 {{ Form::label('Email') }}
 {{ Form::email('email') }}
 {{ Form::label('password', 'Password') }}

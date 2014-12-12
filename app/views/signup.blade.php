@@ -11,7 +11,7 @@
 	<div class='error'>{{ $message }}</div>
 @endforeach
 
-{{ Form::open(array('action' => 'UserController@signup')) }}
+{{ Form::open(array('action' => 'UserController@post_signup')) }}
 {{ Form::label('First Name') }}
 {{ Form::text('first_name') }}
 {{ Form::label('Last Name') }}

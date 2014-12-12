@@ -16,11 +16,9 @@ class CreateVideoGameRoulette extends Migration {
 		Schema::create('games', function($table)
 		{
 			$table->increments('id');
-			$table->string('title');
+			$table->string('title')->unique();
 			$table->string('platform');
-			$table->text('description');
 			$table->string('publisher');
-			$table->binary('image');
 			$table->timestamps();
 		});
 
@@ -31,7 +29,7 @@ class CreateVideoGameRoulette extends Migration {
 			$table->string('first_name');
 			$table->string('last_name');
 			$table->string('email')->unique();
-			$table->string('remember_token', 100);
+			$table->string('remember_token');
 			$table->string('password');
 			$table->timestamps();
 		});
@@ -64,10 +62,11 @@ class CreateVideoGameRoulette extends Migration {
 	public function down()
 	{
 		// Drop all the tables
+		Schema::drop('user_game_tag');
 		Schema::drop('games');
 		Schema::drop('users');
 		Schema::drop('tags');
-		Schema::drop('user_game_tag');
+
 	}
 
 }

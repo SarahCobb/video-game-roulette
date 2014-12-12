@@ -24,14 +24,12 @@
                     <div id="navbarCollapse" class="collapse navbar-collapse">
                         <ul class="nav navbar-nav">
                         @if(Auth::check())
-                            <li><a href="/my-games">My Games</a></li>
-                            <li><a href="/library">Game Library</a></li>
-                            <li><a href="/roulette">Roulette</a></li>
+                            <li><a href="{{ action('UserController@get_my_games') }}">My Games</a></li>
+                            <li><a href="{{ action('UserController@get_roulette') }}">Roulette</a></li>
                             <li><a href="{{ action('UserController@logout') }}">Log Out</a></li>
                         @else
-                            <li><a href="/library">Game Library</a></li>
-                            <li><a href="{{ action('UserController@signup') }}">Sign Up</a></li>
-                            <li><a href="{{ action('UserController@login') }}">Log In</a></li>
+                            <li><a href="{{ action('UserController@get_signup') }}">Sign Up</a></li>
+                            <li><a href="{{ action('UserController@get_login') }}">Log In</a></li>
                         @endif
                         </ul>
                     </div>

@@ -1,36 +1,45 @@
 <?php
 
+use XmlIterator\XmlIterator;
+
 class UserController extends BaseController 
 {
 	public function get_add()
 	{
-		// Show add game form
-		return View::make('add');
+		# Show add game form
+		$tags = file('tags.txt');
+		return View::make('add')
+			->with('tags', $tags);
 	}
 	
 	public function post_add($id)
 	{
-		// Handle adding game to user collection
+		# Handle adding game with tags to user collection
 		$user = Auth::user();
 		Game::find($id)->users()->save($user);
-
-		return Redirect::action('GamesController@showGames')->with('flash_message', 'Game added to your collection!');
-
+		# Return to home
+		return Redirect::action('GamesController@index')
+			->with('flash_message', 'Game added to your collection!');
 	}
 
 	public function remove($id)
 	{
-		// Handle removing game from user collection
+		# Remove game from user collection
 		$user = Auth::user();
 		$game = Game::find($id);
 		$game->users()->detach($user->id);
-
-		return Redirect::action('GamesController@showGames')->with('flash_message', 'Game removed from your collection!');
+		# Return home
+		return Redirect::action('GamesController@index')
+			->with('flash_message', 'Game removed from your collection!');
 	}
 
-	public function get_collection()
+	public function get_my_games()
 	{
-		// Show user's game collection
+		# Query database for all games belonging to authenticated user
+		# Pass collection to view
+		# Return view
+
+		/* Show user's game collection
 		$userID = Auth::id();
 		// Get all games
 		// $games = Game::all=();
@@ -44,18 +53,29 @@ class UserController extends BaseController
 		$games = $userGames->games;
 		// $games = $user->games;
 		return View::make('collection')
-			->with('games', $games);
+			->with('games', $games); */
+	}
+
+	public function get_roulette()
+	{
+		# Show roulette form
+		return View::make('roulette');
+	}
+
+	public function post_roulette()
+	{
+		# Handle roulette form and results
 	}
 
 	public function get_signup()
 	{
-		// Show signup form
+		# show signup form
 		return View::make('signup');
 	}
 
 	public function post_signup()
 	{
-		// Handle user creation
+		# validate user input
 		$rules = array(
 			'email' => 'required|email|unique:users,email',
 			'password' => 'required|min:6'
@@ -63,48 +83,48 @@ class UserController extends BaseController
 
 		$validator = Validator::make(Input::all(), $rules);
 		if($validator->fails()) {
-			return Redirect::to('/signup')
+			return Redirect::action('UserController@get_signup')
 				->with('flash_message', 'Sign up failed :( Please fix the errors below.')
 				->withInput()
 				->withErrors($validator);
 		}
+		# create new user
 		$user = new User;
 		$user->first_name = Input::get('first_name');
 		$user->last_name = Input::get('last_name');
 		$user->email = Input::get('email');
 		$user->password = Hash::make(Input::get('password'));
+		# save new user and catch exceptions
 		try {
 			$user->save();
 		}
 		catch (Exception $e) {
-			return Redirect::to('/signup')
+			return Redirect::action('UserController@get_signup')
 				->with('flash_message', 'Sign up failed :( Please try again.')
 				->withInput();
 		}
+		# log in user 
 		Auth::login($user);
-		// $user->sendWelcomeEmail();
-		return Redirect::action('HomeController@index')->with('flash_message', 'Welcome to Video Game Roulette!');
-		
-
-		
+		return Redirect::action('GamesController@index')
+			->with('flash_message', 'Welcome to Video Game Roulette!');
 	}
 
 	public function get_login()
 	{
-		// Show login form
+		# show login form
 		return View::make('login');
 	}
 
 	public function post_login()
 	{
-		// Handle user login
+		# handle user login
 		$credentials = Input::only('email', 'password');
-		# Note we don't have to hash the password before attempting to auth - Auth::attempt will take care of that for us
 		if (Auth::attempt($credentials)) {
-			return Redirect::intended('/')->with('flash_message', 'Welcome Back!');
+			return Redirect::intended('/')
+				->with('flash_message', 'Welcome Back!');
 		}
 		else {
-			return Redirect::action('UserController@login')
+			return Redirect::action('UserController@get_login')
 				->with('flash_message', 'Log in failed :( Please try again.')
 				->withInput();
 		}
@@ -112,22 +132,21 @@ class UserController extends BaseController
 
 	public function get_reset()
 	{
-		// Show password reset form
+		# show password reset form
 		return View::make('reset');
 	}
 
 	public function post_reset()
 	{
-		// Handle password reset
+		# handle password reset
 	}
 
 	public function logout()
 	{
-		// Handle user log out
-				# Log out
+		# handle user log out
 		Auth::logout();
-		# Send them to the homepage
-		return Redirect::action('HomeController@index');
+		# send them to the homepage
+		return Redirect::action('GamesController@index');
 
 	}
 }

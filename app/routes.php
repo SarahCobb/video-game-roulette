@@ -10,6 +10,17 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
+use XmlIterator\XmlIterator;
+use Paste\Pre;
+
+Route::get('/seed', function() {
+	$tagList = array('Fighting','Maze','Arcade','Shooter','Adventure','Stealth','Horror','Graphic Adventure','Role-Playing','Japanese Role-Playing', 'Turn-Based','Simulation','Strategy','Sports','Racing','Music','Party','Puzzle','Trivia','Multiplayer','Nintendo Entertainment System','Atari 7800','Sega Master System','Super Casette Vision','Sega Genesis','Super Nintendo Entertainment System','Playstation','Playstation 2','Playstation 3','Playstation 4','Atari Jaguar','Nintendo64','Nintendo GameCube', 'Xbox', 'Xbox 360','Xbox One','Wii', 'Wii U','Game Boy','Game Boy Color','Game Boy Advance','Nintendo DS','Nintendo 3DS','Playstation Portable','Gizmondo','Sony Xperia PLAY');
+	for ($i = 0; $i < count($tagList); $i++) {
+		$newTag = new Tag;
+		$newTag->name = $tagList[$i];
+		$newTag->save();
+	}
+});
 
 Route::get('/', function()
 {
@@ -29,32 +40,27 @@ Route::get('mysql-test', function() {
 
 });
 
-# Bind route parameters
+# bind route parameters
 Route::model('game', 'Game');
 
-# Load Pages
-Route::get('/', 'RouletteController@index'); # welcome screen
-Route::get('/library', 'GamesController@get_games'); # show peer game database and search box
-# Route::get('/create', 'GamesController@get_create'); # create a game
-Route::get('/search', 'GamesController@get_search_results'); # show search results and add form
-Route::get('/my-games', 'UserController@get_collection'); # show collection
-route::get('/game-detail/{id}', 'GamesController@get_game_detail'); # show game details
+# load Pages
+Route::get('/', 'GamesController@index'); # welcome screen with search box
+Route::get('/search-results', 'GamesController@get_search_results'); # show existing game search results
+Route::get('/create', 'GamesController@get_create'); # show game creation form
+Route::get('/my-games', 'UserController@get_my_games'); # show collection
 Route::get('/add/{id}', 'UserController@get_add'); # add a game to collection
 Route::get('/edit/{id}', 'GamesController@get_edit'); # edit game tags in collection
-Route::get('/roulette', 'RouletteController@get_roulette'); # show game roulette form
+Route::get('/roulette', 'UserController@get_roulette'); # show game roulette form
 Route::get('/signup', 'UserController@get_signup'); # show sign up form
 Route::get('/login', 'UserController@get_login'); # show log in form
 Route::get('/reset', 'UserController@get_reset'); # show password reset form
 
-# Handle back-end tasks
+# handle processes 
 Route::get('/remove/{id}', 'UserController@remove'); # remove a game from collection
 Route::get('/logout', 'UserController@logout'); # log out user
-
-# Process forms
 Route::post('/create', 'GamesController@post_create'); # handle game creation
-# Route::post('/edit/{id}', 'GamesController@edit');
-Route::post('/search', 'GamesController@search'); # handle game search
-Route::post('/roulette', 'RouletteController@roulette'); # handle game roulette form
-Route::post('/signup', 'UserController@signup'); # handle user creation
-Route::post('/login', 'UserController@login'); # handle user authentication
-Route::post('/reset', 'UserController@reset'); # handle password reset
+Route::post('/search', 'GamesController@search'); # handle existing game search
+Route::post('/roulette', 'UserController@post_roulette'); # handle game roulette form
+Route::post('/signup', 'UserController@post_signup'); # handle user creation
+Route::post('/login', 'UserController@post_login'); # handle user authentication
+Route::post('/reset', 'UserController@post_reset'); # handle password reset
