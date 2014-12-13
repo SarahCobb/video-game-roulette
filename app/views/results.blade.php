@@ -11,10 +11,6 @@
 {{ Form::submit('Search') }}
 {{ Form::close() }}
 
-    @if (is_null($results)) 
-        <p>No games found. Would you like to create one?</p>
-        <a href="{{ action('GamesController@get_create') }}" class="btn btn-primary">Create Game</a>
-    @else
     <p> You searched for {{ $query }}:</p>
             <table class="">
             <thead>
@@ -38,6 +34,5 @@
                 @endforeach
             </tbody>
         </table> 
-        @endif
 @stop
 

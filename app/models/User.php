@@ -25,13 +25,13 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	public function tags()
 	{
-		return $this->belongsToMany('Tag', 'user_game_tag', 'user_id', 'tag_id')
+		return $this->hasMany('Tag', 'user_game_tag', 'user_id', 'tag_id', 'game_id')
 			->withPivot('game_id');
 	}
 
 	public function games()
 	{
-		return $this->belongsToMany('Game', 'user_game_tag', 'user_id', 'game_id')
+		return $this->hasMany('Game', 'user_game_tag', 'user_id', 'game_id')
 			->withPivot('tag_id');
 	}
 }

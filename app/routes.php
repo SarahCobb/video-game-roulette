@@ -45,9 +45,9 @@ Route::model('game', 'Game');
 
 # load Pages
 Route::get('/', 'GamesController@index'); # welcome screen with search box
-Route::get('/results', 'GamesController@get_search_results'); # show existing game search results
+Route::get('/results', 'GamesController@get_search_results'); # show search results
 Route::get('/create', 'GamesController@get_create'); # show game creation form
-Route::get('/my-games', 'UserController@get_my_games'); # show collection
+Route::get('/my-games', 'UserController@get_my_games'); # show user's game collection
 Route::get('/add/{id}', 'UserController@get_add'); # add a game to collection
 Route::get('/edit/{id}', 'GamesController@get_edit'); # edit game tags in collection
 Route::get('/roulette', 'UserController@get_roulette'); # show game roulette form

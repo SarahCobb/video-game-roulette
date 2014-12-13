@@ -6,12 +6,12 @@
 
 @section('content')
 
-{{ Form::open(array('action' => 'UserController@post_add')) }}
-@foreach ($tags as $key => $tag)
-	{{ Form::checkbox($tag->name, $tag->name) }}
-	{{ Form::label($tag->name) }}
-@endforeach
-{{ Form::submit('Save') }}
-{{ Form::close() }}
+	{{ Form::open(array('action' => 'UserController@post_add')) }}
+	@foreach ($tags as $key => $tag)
+		{{ Form::checkbox($tag->name, $tag->id) }}
+		{{ Form::label($tag->name) }}
+	@endforeach
+	{{ Form::submit('Save') }}
+	{{ Form::close() }}
 
 @stop

@@ -16,10 +16,18 @@ class UserController extends BaseController
 	{
 		# Handle adding game with tags to user collection
 		$user = Auth::user();
-		Game::find($id)->users()->save($user);
-		# Return to home
-		return Redirect::action('GamesController@index')
-			->with('flash_message', 'Game added to your collection!');
+		$game = Game::find($id);
+		$tags = Input::except('_token');
+		foreach ($tags as $key => $tag_id) {
+			$tag = Tag::find($tag_id);
+			Auth::user()->games()->save( $game, array('tag_id' => $tag->id) );
+			# Game::find($id)->Auth::user()->save($tag);
+		}
+		// #Game::find($id)->users()->save($user);
+		// Auth::user()->games()->save( $game, array('tag_id' => $tag->id) );
+		// # Return to home
+		// return Redirect::action('GamesController@index')
+		// 	->with('flash_message', 'Game added to your collection!');
 	}
 
 	public function remove($id)
