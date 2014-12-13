@@ -57,21 +57,25 @@ class GamesController extends BaseController
 	public function search()
 	{
 		# Query database for games
-		# If no games found, redirect to games database search
+		$query = Input::get('query');
+		$results = Game::where('title', 'LIKE' , '%' . $query . '%')
+						->orWhere('publisher', 'LIKE', '%' . $query . '%')
+						->orWhere('platform', 'LIKE', '%' . $query . '%')
+						->get();
 		# If games found, redirect to results page
-		
+		if ($results->isEmpty()) {
+			return Redirect::action('GamesController@get_create')
+				->with('flash_message', 'No games found. Would you like to create one?');
+		} else {
+			return View::make('results')
+				->with('results', $results)
+				->with('query', $query);
+		}
+
 	}
 
-	public function search_DB()
+	public function results()
 	{
-		# Call GamesDB API for query
-		# Parse results
-		# If no games found, redirect to '/' with flash message
-		# If games found, redirect to results page
-	}
-
-	public function get_game_detail($id)
-	{
-		# Return game detail view
+		return View::make('results');
 	}
 }

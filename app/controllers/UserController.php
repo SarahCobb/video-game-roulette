@@ -4,10 +4,10 @@ use XmlIterator\XmlIterator;
 
 class UserController extends BaseController 
 {
-	public function get_add()
+	public function get_add($id)
 	{
 		# Show add game form
-		$tags = file('tags.txt');
+		$tags = Tag::all();
 		return View::make('add')
 			->with('tags', $tags);
 	}
@@ -52,7 +52,7 @@ class UserController extends BaseController
 		$userGames = User::find($userID);
 		$games = $userGames->games;
 		// $games = $user->games;
-		return View::make('collection')
+		return View::make('games')
 			->with('games', $games); */
 	}
 

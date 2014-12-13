@@ -1,7 +1,7 @@
 @extends ('master')
 
 @section('title')
-<title></title>
+<title>Reset Password</title>
 @stop
 
 @section('content')

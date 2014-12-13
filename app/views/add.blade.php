@@ -1,14 +1,17 @@
 @extends ('master')
 
 @section('title')
-<title></title>
+<title>Add Tags</title>
 @stop
 
 @section('content')
-<h1>Add {{$game['title'] to Your Collection</h1>
 
-{{ Form::open('action' => 'UserController@post_add') }}
+{{ Form::open(array('action' => 'UserController@post_add')) }}
 @foreach ($tags as $key => $tag)
+	{{ Form::checkbox($tag->name, $tag->name) }}
+	{{ Form::label($tag->name) }}
 @endforeach
+{{ Form::submit('Save') }}
+{{ Form::close() }}
 
 @stop
