@@ -1,7 +1,5 @@
 <?php
 
-use XmlIterator\XmlIterator;
-
 class GamesController extends BaseController
 {
 	public function index()
@@ -12,23 +10,42 @@ class GamesController extends BaseController
 	public function get_create()
 	{
 		# show game creation form
-		return View::make('create');
+		$tags = Tag::all();
+		return View::make('create')
+			->with('tags', $tags);
 	}
 	
 	public function post_create()
 	{
-		# create game and redirect to add form
+		# create game 
 		$game = new Game();
 	    $game->title = Input::get('title');
 	    $game->platform = Input::get('platform');
 	    $game->publisher = Input::get('publisher');
+	    $game->description = Input::get('description');
 	    $game->save();
-		return Redirect::action('UserController@get_add')
-			->with('game', $game);
+
+	    # attach tags
+		$tags = Input::except('_token', 'title', 'platform', 'publisher', 'description');
+		foreach ($tags as $tag => $id) {
+			$tag = Tag::find($id);
+			$game->tags()->attach($tag);
+		}
+
+	    # automatically add to user collection
+	    Auth::user()->games()->attach($game);
+
+	    # redirect to user collection view
+		return Redirect::action('UserController@get_my_games')
+			->with('flash_message', 'Game created and added to your collection.');
 	}
 
 	public function get_edit($id)
 	{
+		# eager load game instance with tags
+		$game = Game::findOrFail($id);
+		return View::make('edit');
+		# pass games with tags to view
 		/* show edit game tags form
 		try {
 			$game = Game::findOrFail($id);
@@ -42,16 +59,26 @@ class GamesController extends BaseController
 			->with('genre', $genre); */
 	}
 
-	public function post_edit()
+	public function post_edit($id)
 	{
-		/* # save game tags to user collection
-		$game = Game::findOrFail(Input::get('id'));
+		# look up game istance and save new details
+		$game = Game::find($id);
 	    $game->title = Input::get('title');
-	    $game->creator = Input::get('creator');
+	    $game->platform = Input::get('platform');
+	    $game->creator = Input::get('publisher');
+	    $game->description = Input::get('description');
 	    $game->save();
 
-    	return Redirect::action('GamesController@index')
-    		->with('flash_message', 'Game saved.'); */
+	    # associate new tags with game
+	    $tags = Input::except('_token', 'title', 'platform', 'publisher', 'description');
+		foreach ($tags as $tag => $id) {
+			$tag = Tag::find($id);
+			$game->tags()->attach($tag);
+		}
+
+	    # redirect to user game collection
+    	return Redirect::action('GamesController@get_my_games')
+    		->with('flash_message', 'Game saved.'); 
 	}
 
 	public function search()

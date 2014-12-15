@@ -19,6 +19,7 @@ class CreateVideoGameRoulette extends Migration {
 			$table->string('title')->unique();
 			$table->string('platform');
 			$table->string('publisher');
+			$table->text('description');
 			$table->timestamps();
 		});
 
@@ -42,18 +43,24 @@ class CreateVideoGameRoulette extends Migration {
 			$table->timestamps();
 		});
 
-		# Create triple pivot table
-		Schema::create('user_game_tag', function($table)
+		# Create collections pivot table
+		Schema::create('game_user', function($table)
 		{
 			$table->integer('game_id')->unsigned();
 			$table->integer('user_id')->unsigned();
-			$table->integer('tag_id')->unsigned();
 			$table->foreign('game_id')->references('id')->on('games');
 			$table->foreign('user_id')->references('id')->on('users');
+		});
+
+		# Create tags pivot table
+		Schema::create('game_tag', function($table)
+		{
+			$table->integer('game_id')->unsigned();
+			$table->integer('tag_id')->unsigned();
+			$table->foreign('game_id')->references('id')->on('games');
 			$table->foreign('tag_id')->references('id')->on('tags');
 		});
 	}
-
 	/**
 	 * Reverse the migrations.
 	 *
@@ -62,11 +69,10 @@ class CreateVideoGameRoulette extends Migration {
 	public function down()
 	{
 		// Drop all the tables
-		Schema::drop('user_game_tag');
+		Schema::drop('game_tag');
+		Schema::drop('game_user');
 		Schema::drop('games');
 		Schema::drop('users');
 		Schema::drop('tags');
-
 	}
-
 }

@@ -13,14 +13,14 @@
 use XmlIterator\XmlIterator;
 use Paste\Pre;
 
-/*Route::get('/seed', function() {
-	$tagList = array('Fighting','Maze','Arcade','Shooter','Adventure','Stealth','Horror','Graphic Adventure','Role-Playing','Japanese Role-Playing', 'Turn-Based','Simulation','Strategy','Sports','Racing','Music','Party','Puzzle','Trivia','Multiplayer','Nintendo Entertainment System','Atari 7800','Sega Master System','Super Casette Vision','Sega Genesis','Super Nintendo Entertainment System','Playstation','Playstation 2','Playstation 3','Playstation 4','Atari Jaguar','Nintendo64','Nintendo GameCube', 'Xbox', 'Xbox 360','Xbox One','Wii', 'Wii U','Game Boy','Game Boy Color','Game Boy Advance','Nintendo DS','Nintendo 3DS','Playstation Portable','Gizmondo','Sony Xperia PLAY');
-	for ($i = 0; $i < count($tagList); $i++) {
-		$newTag = new Tag;
-		$newTag->name = $tagList[$i];
-		$newTag->save();
-	}
-});*/
+// Route::get('/seed', function() {
+// 	$tagList = array('Fighting','Maze','Arcade','Shooter','Adventure','Stealth','Horror','Graphic Adventure','Role-Playing','Japanese Role-Playing', 'Turn-Based','Simulation','Strategy','Sports','Racing','Music','Party','Puzzle','Trivia','Multiplayer','Nintendo Entertainment System','Atari 7800','Sega Master System','Super Casette Vision','Sega Genesis','Super Nintendo Entertainment System','Playstation','Playstation 2','Playstation 3','Playstation 4','Atari Jaguar','Nintendo64','Nintendo GameCube', 'Xbox', 'Xbox 360','Xbox One','Wii', 'Wii U','Game Boy','Game Boy Color','Game Boy Advance','Nintendo DS','Nintendo 3DS','Playstation Portable','Gizmondo','Sony Xperia PLAY');
+// 	for ($i = 0; $i < count($tagList); $i++) {
+// 		$newTag = new Tag;
+// 		$newTag->name = $tagList[$i];
+// 		$newTag->save();
+// 	}
+// });
 
 Route::get('/', function()
 {
@@ -49,7 +49,7 @@ Route::get('/results', 'GamesController@get_search_results'); # show search resu
 Route::get('/create', 'GamesController@get_create'); # show game creation form
 Route::get('/my-games', 'UserController@get_my_games'); # show user's game collection
 Route::get('/add/{id}', 'UserController@get_add'); # add a game to collection
-Route::get('/edit/{id}', 'GamesController@get_edit'); # edit game tags in collection
+Route::get('/edit/{id}', 'GamesController@get_edit'); # edit game 
 Route::get('/roulette', 'UserController@get_roulette'); # show game roulette form
 Route::get('/signup', 'UserController@get_signup'); # show sign up form
 Route::get('/login', 'UserController@get_login'); # show log in form

@@ -4,39 +4,11 @@ class Tag extends Eloquent
 {
 	public function users()
 	{
-		return $this->belongsToMany('User', 'user_game_tag')
-			->withPivot('game_id');
+		return $this->belongsToMany('User');
 	}
 
 	public function games()
 	{
-		return $this->belongsToMany('Game', 'user_game_tag')
-			->withPivot('user_id');
+		return $this->belongsToMany('Game');
 	}
-
-
-	// public function users()
-	// {
-	// 	return $this->belongsToMany('User', 'user_game_tag')
-	// 		->withPivot('game_id');
-	// }
-
-	// public function games()
-	// {
-	// 	return $this->belongsToMany('Game', 'user_game_tag', 'tag_id', 'game_id')
-	// 		->withPivot('user_id');
-	// }
-
-
-	// public function users()
-	// {
-	// 	return $this->belongsToMany('User', 'user_game_tag', 'tag_id', 'user_id')
-	// 		->withPivot('game_id');
-	// }
-
-	// public function games()
-	// {
-	// 	return $this->belongsToMany('Game', 'user_game_tag', 'tag_id', 'game_id')
-	// 		->withPivot('user_id');
-	// }
 }

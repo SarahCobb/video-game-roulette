@@ -1,78 +1,73 @@
 <?php
 
-use XmlIterator\XmlIterator;
-
 class UserController extends BaseController 
 {
 	public function get_add($id)
 	{
-		# Show add game form
-		$tags = Tag::all();
-		return View::make('add')
-			->with('tags', $tags);
+		# add game to user collection
+		$game = Game::find($id);
+		Auth::user()->games()->attach($game);
+
+		# return to user collection
+		return Redirect::action('UserController@get_my_games')
+			->with('flash_message', 'Game added to your collection!');
 	}
 	
-	public function post_add($id)
-	{
-		# Handle adding game with tags to user collection
-		$user = Auth::user();
-		$game = Game::find($id);
-		$tags = Input::except('_token');
-		foreach ($tags as $key => $tag_id) {
-			$tag = Tag::find($tag_id);
-			Auth::user()->games()->save( $game, array('tag_id' => $tag->id) );
-			# Game::find($id)->Auth::user()->save($tag);
-		}
-		// #Game::find($id)->users()->save($user);
-		// Auth::user()->games()->save( $game, array('tag_id' => $tag->id) );
-		// # Return to home
-		// return Redirect::action('GamesController@index')
-		// 	->with('flash_message', 'Game added to your collection!');
-	}
+	// public function post_add($id)
+	// {
+	// 	# add game to user collection
+	// 	$game = Game::find($id);
+	// 	Auth::user()->games()->attach($game);
+
+	// 	# return to user collection
+	// 	return Redirect::action('UserController@get_my_games')
+	// 		->with('flash_message', 'Game added to your collection!');
+	// }
 
 	public function remove($id)
 	{
-		# Remove game from user collection
-		$user = Auth::user();
+		# remove game from user collection
 		$game = Game::find($id);
-		$game->users()->detach($user->id);
+		Auth::user()->games()->detach($game);
 		# Return home
-		return Redirect::action('GamesController@index')
+		return Redirect::action('UserController@get_my_games')
 			->with('flash_message', 'Game removed from your collection!');
 	}
 
 	public function get_my_games()
 	{
-		# Query database for all games belonging to authenticated user
-		# Pass collection to view
-		# Return view
+		# get all games belonging to authenticated user
+		// $user = Auth::user();
+		$id = Auth::id();
+		// $games = Game::has('users')
+  //               $q->where('user_id', '=', '$id');
+  //           })->get();
 
-		/* Show user's game collection
-		$userID = Auth::id();
-		// Get all games
-		// $games = Game::all=();
-		// foreach($games as $game){
-		if($game_id == $user_id){
-			echo $game->name;
+		$games = Game::whereHas('users', function($q) use ($id)
+		{
+		    $q->where('user_id', '=', $id);
+		
+		})->get();
+		# Pass collection to view
+		if ($games->isEmpty()) {
+			return Redirect::action('GamesController@index')
+				->with('flash_message', 'You have no games :( Why not search for some?');
+		} else {
+			return View::make('games')
+				->with('games', $games);			
 		}
-	}
-		// conditional on game_id = user_id, echo game
-		$userGames = User::find($userID);
-		$games = $userGames->games;
-		// $games = $user->games;
-		return View::make('games')
-			->with('games', $games); */
+
 	}
 
 	public function get_roulette()
 	{
-		# Show roulette form
+		# show roulette form
 		return View::make('roulette');
 	}
 
 	public function post_roulette()
 	{
-		# Handle roulette form and results
+		# process roulette form and results
 	}
 
 	public function get_signup()
@@ -102,6 +97,7 @@ class UserController extends BaseController
 		$user->last_name = Input::get('last_name');
 		$user->email = Input::get('email');
 		$user->password = Hash::make(Input::get('password'));
+		
 		# save new user and catch exceptions
 		try {
 			$user->save();
@@ -111,6 +107,7 @@ class UserController extends BaseController
 				->with('flash_message', 'Sign up failed :( Please try again.')
 				->withInput();
 		}
+		
 		# log in user 
 		Auth::login($user);
 		return Redirect::action('GamesController@index')
