@@ -12,17 +12,6 @@ class UserController extends BaseController
 		return Redirect::action('UserController@get_my_games')
 			->with('flash_message', 'Game added to your collection!');
 	}
-	
-	// public function post_add($id)
-	// {
-	// 	# add game to user collection
-	// 	$game = Game::find($id);
-	// 	Auth::user()->games()->attach($game);
-
-	// 	# return to user collection
-	// 	return Redirect::action('UserController@get_my_games')
-	// 		->with('flash_message', 'Game added to your collection!');
-	// }
 
 	public function remove($id)
 	{
@@ -37,12 +26,7 @@ class UserController extends BaseController
 	public function get_my_games()
 	{
 		# get all games belonging to authenticated user
-		// $user = Auth::user();
 		$id = Auth::id();
-		// $games = Game::has('users')
-  //               $q->where('user_id', '=', '$id');
-  //           })->get();
-
 		$games = Game::whereHas('users', function($q) use ($id)
 		{
 		    $q->where('user_id', '=', $id);
@@ -56,18 +40,55 @@ class UserController extends BaseController
 			return View::make('games')
 				->with('games', $games);			
 		}
-
 	}
 
 	public function get_roulette()
 	{
 		# show roulette form
-		return View::make('roulette');
+		$tags = Tag::all();
+		return View::make('roulette')
+			->with('tags', $tags);
 	}
 
 	public function post_roulette()
 	{
-		# process roulette form and results
+		# get user and tags
+		$id = Auth::id();
+
+		if (Input::get('all')) {
+			$tags = Tag::all()->lists('id');
+			//var_dump($tags);
+		} else {
+			$tags = Input::except('_token');
+			//var_dump($tags);
+		}
+		
+		# get games with desired tags
+	    $games = Game::with('tags','users')
+            ->whereHas('users', function($q) use ($id) {
+                $q->where('user_id', '=', $id);
+            })
+            ->whereHas('tags', function($q) use ($tags) {
+               	$q->whereIn('tag_id', $tags);
+           	})
+           	->get();
+
+        # let the user know if there were no (or 1) games, else show results
+        if ($games->isEmpty()) {
+        	return Redirect::action('UserController@get_roulette')
+        		->with('flash_message', 'No games meet your criteria. Try a different selection, or play with all games.');
+        }
+
+        # choose a random game from collection
+        $rand = rand(0, (count($games) - 1));
+        $games->toArray();
+        var_dump($rand);
+        $roulette = $games[$rand];
+        
+        # pass chosen game to results view
+        return View::make('roulette_results')
+        	->with('roulette', $roulette);
+        
 	}
 
 	public function get_signup()

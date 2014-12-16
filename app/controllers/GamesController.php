@@ -43,29 +43,27 @@ class GamesController extends BaseController
 	public function get_edit($id)
 	{
 		# eager load game instance with tags
-		$game = Game::findOrFail($id);
-		return View::make('edit');
+		$game = Game::find($id);
+		$all_tags = Tag::all();
+		$tags = Tag::with('games')
+			->whereHas('games', function($q) use ($id) {
+		    	$q->where('game_id', '=', $id);
+			})->lists('id');
+
 		# pass games with tags to view
-		/* show edit game tags form
-		try {
-			$game = Game::findOrFail($id);
-			$genre = Genre::findOrFail($id);
-		}
-		catch(exception $e) {
-			return Redirect::action('GamesController@showGames')->with('flash_message', 'Game not found.');
-		}
 		return View::make('edit')
 			->with('game', $game)
-			->with('genre', $genre); */
+			->with('all_tags', $all_tags)
+			->with('tags', $tags);
 	}
 
 	public function post_edit($id)
 	{
 		# look up game istance and save new details
-		$game = Game::find($id);
+		$game = Game::find(Input::get('id'));
 	    $game->title = Input::get('title');
 	    $game->platform = Input::get('platform');
-	    $game->creator = Input::get('publisher');
+	    $game->publisher = Input::get('publisher');
 	    $game->description = Input::get('description');
 	    $game->save();
 
@@ -77,7 +75,7 @@ class GamesController extends BaseController
 		}
 
 	    # redirect to user game collection
-    	return Redirect::action('GamesController@get_my_games')
+    	return Redirect::action('UserController@get_my_games')
     		->with('flash_message', 'Game saved.'); 
 	}
 
@@ -94,7 +92,7 @@ class GamesController extends BaseController
 			return Redirect::action('GamesController@get_create')
 				->with('flash_message', 'No games found. Would you like to create one?');
 		} else {
-			return View::make('results')
+			return View::make('search_results')
 				->with('results', $results)
 				->with('query', $query);
 		}
@@ -103,6 +101,6 @@ class GamesController extends BaseController
 
 	public function results()
 	{
-		return View::make('results');
+		return View::make('search_results');
 	}
 }

@@ -4,24 +4,36 @@
 <title></title>
 @stop
 
-@section('content')
-<h1>Create a Game</h1>
+game
+all_tags
+tags
 
-{{ Form::open(array('action' => 'GamesController@post_create')) }}
+@section('content')
+<h1>Edit {{ $game['title'] }}</h1>
+
+{{ Form::open(array('action' => 'GamesController@post_edit')) }}
+{{ Form::hidden('id', $game->id) }}
 {{ Form::label('title', 'Title') }}
-{{ Form::text('title') }}
+{{ Form::text('title', $game['title']) }}
 <br>
 {{ Form::label('publisher', 'Publisher') }}
-{{ Form::text('publisher') }}
+{{ Form::text('publisher', $game['publisher']) }}
 <br>
 {{ Form::label('platform', 'Platform') }}
-{{ Form::text('platform') }}
+{{ Form::text('platform', $game['platform']) }}
 <br>
 {{ Form::label('description', 'Description') }}
-{{ Form::text('description') }}
+{{ Form::text('description', $game['description']) }}
 <br>
 {{ Form::label('tags', 'Tags') }}
-	@foreach ($tags as $key => $tag)
+	@foreach ($all_tags as $key => $tag)
+		@for ($j = 0; $j < count($tags); $j++)
+			@if ($tag->id == $tags[$j])
+				{{ Form::checkbox($tag->name, $tag->id, true) }}
+				{{ Form::label($tag->name) }}
+				<?php continue 2; ?>
+			@endif
+		@endfor
 		{{ Form::checkbox($tag->name, $tag->id) }}
 		{{ Form::label($tag->name) }}
 	@endforeach
