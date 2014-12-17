@@ -6,9 +6,10 @@
 
 {{ Form::open(array('action' => 'GamesController@search')) }}
 {{ Form::text('query') }}
-{{ Form::submit('Search') }}
+{{ Form::checkbox('all_games', 'all_games') }}
+{{ Form::label('all_games', 'Just show me all the games') }}
+{{ Form::submit('GO') }}
 {{ Form::close() }}
 
-<br> or <a href="{{ action('GamesController@get_create') }}" class="btn btn-primary">Create Game</a>
 @stop
 

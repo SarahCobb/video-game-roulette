@@ -1,0 +1,123 @@
+/* Basic Styles */
+
+body {
+	background: #5e5e5e;
+	color: #ffffff;
+	font-family: 'Slackey', cursive;
+	font-size: 18px;
+}
+
+div {
+	max-width: 1200px;
+}
+
+h1 {
+	font-color: #ffffff;
+	font-size: 30px;
+	font-weight: bold;
+	padding-bottom: 12px;
+	text-align: center;
+}
+
+h2 {
+	font-color: #FFFF66;
+	font-size:26px;
+	padding-bottom: 10px;
+	text-align: center;
+}
+
+h3 {
+	font-color: #ffffff;
+	font-size: 20px;
+}
+
+h3.game_title {
+	font-color: #FF5050!important;
+}
+
+p {
+	font-color: #ffffff;
+	font-size: 14px;
+	margin:0;
+	text-align: left;
+}
+
+p.center {
+	text-align: center;
+}
+
+a {
+	color: #FFFF66;
+}
+
+a:hover {
+	color: #ffffff;
+}
+
+a.button {
+	color: #0099FF;
+	font-weight: 700;
+	font-size: 24px;
+	background: #ffffff;
+	padding: 10px;
+}
+
+img {
+	padding: 0px;
+}
+
+/* Form Styles */
+
+form {
+	text-align: left;
+}
+
+input[type='submit'] {
+	color: #FF5050;
+	font-weight: 700;
+}
+
+input[type="text"] {
+	color: #5e5e5e;
+}
+
+input[name='query'] {
+	width: 100%;
+	height: 100px;
+	font-size: 50px;
+	padding: 25px;
+}
+
+label {
+	color: #FFFF66;
+	text-align: left!important;
+	font-size: 18px;
+}
+
+label.text {
+	margin-bottom: 20px!important;
+}
+
+label.error {
+	color: #FF5050;
+	font-size: 18px;
+	margin-bottom: 20px;
+}
+
+/* Custom Classes */
+
+.form-control {
+	max-width: 160px;
+}
+
+.form-group {
+	margin-bottom: -5px;
+}
+
+.column {
+	margin: 50px;
+}
+
+.container {
+	max-width: 1000px;
+}

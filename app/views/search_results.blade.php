@@ -8,10 +8,16 @@
 
 {{ Form::open(array('action' => 'GamesController@search')) }}
 {{ Form::text('query') }}
+{{ Form::checkbox('all_games', 'all_games') }}
+{{ Form::label('all_games', 'Just show me all the games') }}
 {{ Form::submit('Search') }}
 {{ Form::close() }}
 
-    <p> You searched for {{ $query }}:</p>
+    @if (is_null($all))
+        <p> You searched for '{{ $query }}':</p>
+    @else
+        <p> Here's all the games.</p>
+    @endif
             <table class="">
             <thead>
                 <tr>
@@ -27,8 +33,9 @@
                     <td>{{ $game->publisher }}</td>
                     <td>{{ $game->platform }}</td>
                     <td>
-                        <a href="{{ action('UserController@get_add', $game->id) }}" class="">Add</a>
-                        <a href="{{ action('UserController@remove', $game->id) }}" class="">Remove</a>
+                        <a href="{{ action('GamesController@get_add', $game->id) }}" class="btn btn-success">Add</a>
+                        <a href="{{ action('GamesController@get_edit', $game->id) }}" class="btn btn-warning">Edit</a>
+                        <a href="{{ action('GamesController@remove', $game->id) }}" class="btn btn-danger">Remove</a>
                     </td>
                 </tr>
                 @endforeach

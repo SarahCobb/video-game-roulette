@@ -45,23 +45,23 @@ Route::model('game', 'Game');
 
 # load Pages
 Route::get('/', 'GamesController@index'); # welcome screen with search box
-Route::get('/results', 'GamesController@get_search_results'); # show search results
-Route::get('/create', 'GamesController@get_create'); # show game creation form
-Route::get('/my-games', 'UserController@get_my_games'); # show user's game collection
-Route::get('/edit/{id}', 'GamesController@get_edit'); # edit game 
-Route::get('/roulette', 'UserController@get_roulette'); # show game roulette form
-Route::get('/signup', 'UserController@get_signup'); # show sign up form
-Route::get('/login', 'UserController@get_login'); # show log in form
-Route::get('/reset', 'UserController@get_reset'); # show password reset form
+Route::get('/results', array( 'before' => 'auth', 'uses' => 'GamesController@get_search_results')); # show search results
+Route::get('/create', array( 'before' => 'auth', 'uses' => 'GamesController@get_create')); # show game creation form
+Route::get('/my-games', array( 'before' => 'auth', 'uses' => 'GamesController@get_my_games')); # show user's game collection
+Route::get('/edit/{id}', array( 'before' => 'auth', 'uses' => 'GamesController@get_edit')); # edit game 
+Route::get('/roulette', array( 'before' => 'auth', 'uses' => 'GamesController@get_roulette')); # show game roulette form
+Route::get('/signup', array( 'before' => 'guest', 'uses' => 'UserController@get_signup')); # show sign up form
+Route::get('/login', array( 'before' => 'guest', 'uses' => 'UserController@get_login')); # show log in form
 
 # handle processes 
-Route::get('/add/{id}', 'UserController@get_add'); # add a game to collection
+Route::get('/add/{id}', 'GamesController@get_add'); # add a game to collection
 Route::post('/edit/{id}', 'GamesController@post_edit'); # edit game 
-Route::get('/remove/{id}', 'UserController@remove'); # remove a game from collection
+Route::get('/remove/{id}', 'GamesController@remove'); # remove a game from collection
 Route::get('/logout', 'UserController@logout'); # log out user
 Route::post('/create', 'GamesController@post_create'); # game creation
 Route::post('/search', 'GamesController@search'); # game search
-Route::post('/roulette', 'UserController@post_roulette'); # game roulette with tags form
+Route::post('/roulette', 'GamesController@post_roulette'); # game roulette with tags form
 Route::post('/signup', 'UserController@post_signup'); # user creation
 Route::post('/login', 'UserController@post_login'); # user authentication
-Route::post('/reset', 'UserController@post_reset'); # password reset
+
+

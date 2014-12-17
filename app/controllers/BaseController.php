@@ -15,4 +15,9 @@ class BaseController extends Controller {
 		}
 	}
 
+	public function __construct() {
+		# CSRF filter
+		$this->beforeFilter('csrf', array('on' => 'post'));
+	}
+
 }

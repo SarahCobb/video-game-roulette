@@ -22,9 +22,6 @@ tags
 {{ Form::label('platform', 'Platform') }}
 {{ Form::text('platform', $game['platform']) }}
 <br>
-{{ Form::label('description', 'Description') }}
-{{ Form::text('description', $game['description']) }}
-<br>
 {{ Form::label('tags', 'Tags') }}
 	@foreach ($all_tags as $key => $tag)
 		@for ($j = 0; $j < count($tags); $j++)

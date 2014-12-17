@@ -17,9 +17,6 @@
 {{ Form::label('platform', 'Platform') }}
 {{ Form::text('platform') }}
 <br>
-{{ Form::label('description', 'Description') }}
-{{ Form::text('description') }}
-<br>
 {{ Form::label('tags', 'Tags') }}
 	@foreach ($tags as $key => $tag)
 		{{ Form::checkbox($tag->name, $tag->id) }}

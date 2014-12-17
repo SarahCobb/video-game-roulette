@@ -9,6 +9,5 @@
 {{ $roulette->title }}
 {{ $roulette->publisher }}
 {{ $roulette->platform }}
-{{ $roulette->description }}
 
 @stop
