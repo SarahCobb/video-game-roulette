@@ -32,7 +32,7 @@ Create an Account
     <label class="sr-only" for="exampleInputPassword2">Password</label>
     <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password" name="password">
   </div>
-  <button style="margin-top:0;" type="submit" class="btn btn-success">Log In</button>
+  <button style="margin-top:0;" type="submit" class="btn btn-success">Sign Up</button>
 </form>
 </div>
 </div>
