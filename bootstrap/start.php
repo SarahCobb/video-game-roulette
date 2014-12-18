@@ -24,19 +24,11 @@ $app = new Illuminate\Foundation\Application;
 |
 */
 
-$env = $app->detectEnvironment(function() {
+$env = $app->detectEnvironment(array(
 
-    # See if there's an environment.php file...
-    # If it exists, get environment string from there
-    if(file_exists(__DIR__.'/../environment.php')) {
-        return require __DIR__.'/../environment.php';
-    }
-    # If not found, assume production
-    else {
-        return 'production';
-    }
+    'local' => array('*'),
 
-});
+));
 
 /*
 |--------------------------------------------------------------------------
