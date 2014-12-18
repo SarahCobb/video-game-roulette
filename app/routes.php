@@ -13,14 +13,14 @@
 use XmlIterator\XmlIterator;
 use Paste\Pre;
 
-Route::get('/seed', function() {
-	$tagList = array('Fighting','Maze','Arcade','Shooter','Adventure','Stealth','Horror','Graphic Adventure','Role-Playing','Japanese Role-Playing', 'Turn-Based','Simulation','Strategy','Sports','Racing','Music','Party','Puzzle','Trivia','Multiplayer','NES','SNES','Playstation','Playstation 2','Playstation 3','Playstation 4','Nintendo64','Nintendo GameCube', 'Xbox', 'Xbox 360','Xbox One','Wii', 'Wii U','Game Boy','Game Boy Color','Game Boy Advance','Nintendo DS','Nintendo 3DS');
-	for ($i = 0; $i < count($tagList); $i++) {
-		$newTag = new Tag;
-		$newTag->name = $tagList[$i];
-		$newTag->save();
-	}
-});
+// Route::get('/seed', function() {
+// 	$tagList = array('Fighting','Maze','Arcade','Shooter','Adventure','Stealth','Horror','Graphic Adventure','Role-Playing','Japanese Role-Playing', 'Turn-Based','Simulation','Strategy','Sports','Racing','Music','Party','Puzzle','Trivia','Multiplayer','NES','SNES','Playstation','Playstation 2','Playstation 3','Playstation 4','Nintendo64','Nintendo GameCube', 'Xbox', 'Xbox 360','Xbox One','Wii', 'Wii U','Game Boy','Game Boy Color','Game Boy Advance','Nintendo DS','Nintendo 3DS');
+// 	for ($i = 0; $i < count($tagList); $i++) {
+// 		$newTag = new Tag;
+// 		$newTag->name = $tagList[$i];
+// 		$newTag->save();
+// 	}
+// });
 
 Route::get('/', function()
 {
