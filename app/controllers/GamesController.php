@@ -42,7 +42,6 @@ class GamesController extends BaseController
 
 	    # attach tags
 		$tags = Input::except('_token', 'title', 'platform', 'publisher', 'save');
-		var_dump($tags);
 		foreach ($tags as $tag => $id) {
 			$tag = Tag::find($id);
 			$game->tags()->attach($tag);

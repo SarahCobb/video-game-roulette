@@ -187,7 +187,7 @@ label.error {
 }
 
 .error {
-	color: red;
+	color: #FF5050;
 }
 
 /* Custom Classes */
@@ -233,4 +233,20 @@ label.error {
 }
 
 /* Media Queries */
+
+@media screen and (max-width: 770px) {
+    
+    .table-responsive {
+	overflow: auto;
+	margin-top: 10px;
+	}
+
+}
+
+@media screen and (min-width: 770px) {
+	.table-responsive {
+		overflow: visible;
+		margin-top: 30px;
+	}
+}
 

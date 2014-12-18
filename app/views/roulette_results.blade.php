@@ -31,6 +31,8 @@ Roulette
 				<p>Created by {{ $games[0]->publisher }}</p>
 				<p>Available on {{ $games[0]->platform }}</p>
 				<br>
+			@else 
+			<p class="error">Sorry, no other games met your criteria. Try a broader selection.</p>
 			@endif
 		@endif
 		@if (isset($games[1]))
