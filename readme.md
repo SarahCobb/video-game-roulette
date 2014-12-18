@@ -1,31 +1,18 @@
-## Laravel PHP Framework
-
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/downloads.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
-
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, and caching.
-
-Laravel aims to make the development process a pleasing one for the developer without sacrificing application functionality. Happy developers make the best code. To this end, we've attempted to combine the very best of what we have seen in other web frameworks, including frameworks implemented in other languages, such as Ruby on Rails, ASP.NET MVC, and Sinatra.
-
-Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
-
-## Official Documentation
-
-Documentation for the entire framework can be found on the [Laravel website](http://laravel.com/docs).
-
-### Contributing To Laravel
-
-**All issues and pull requests should be filed on the [laravel/framework](http://github.com/laravel/framework) repository.**
-
-### License
-
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
-
-
-
-http://jsfiddle.net/zAFND/2/
-http://getbootstrap.com/components
+#Project 4: Video Game Roulette  
+## Live URL  
+[p4.sarahecobb.com](http://p4.sarahecobb.com)  
+## Description  
+An app where gamers can keep track of their game collections, and get suggestions on what to play based on game type and console via a random 'roulette' generator.
+## Demo  
+[placeholder](placeholder)
+## Notes for TA  
+Guests can only view a list of games. Create an account to see full functionality -- search and add games to you collection, create and edit games, and request a random suggestion for what to play based on game category or console by visiting the 'Roulette' tab.
+## Outside Sources  
+[Bootstrap Documentation](http://getbootstrap.com/components)  
+[Google Font Slackey](http://www.google.com/fonts/specimen/Slackey) 
+[Google Font Armata](http://www.google.com/fonts/specimen/Armata) 
+[Base for Button Checkboxes](http://jsfiddle.net/zAFND/2/)
+[Notes on Using Multiple Submit Buttons](http://forumsarchive.laravel.io/viewtopic.php?id=2272)
+[Foobooks Example](https://github.com/susanBuck/foobooks)  
+[CodeBright](http://daylerees.com/codebright)
+[Laravel Documentation](http://laravel.com/docs/4.2)
