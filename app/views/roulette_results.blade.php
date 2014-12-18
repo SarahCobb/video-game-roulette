@@ -50,7 +50,7 @@ Roulette
 			@endif
 		@endif
 		<br><br>
-		
+		<a style="margin:0;" href="{{ action('GamesController@get_roulette') }}" class="btn btn-warning btn-lg">Play Again</a>
 </div>
 <div class="col-md-4"></div>
 </div>

@@ -4,7 +4,7 @@
 ## Description  
 An app where gamers can keep track of their game collections, and get suggestions on what to play based on game type and console via a random 'roulette' generator.
 ## Demo  
-[placeholder](placeholder)
+[Screencast](http://screencast.com/t/ZmkJoSaLL9)
 ## Notes for TA  
 Guests can only view a list of games. Create an account to see full functionality -- search and add games to you collection, create and edit games, and request a random suggestion for what to play based on game category or console by visiting the 'Roulette' tab.
 ## Outside Sources  
