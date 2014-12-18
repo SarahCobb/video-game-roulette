@@ -25,12 +25,9 @@ Create an Account
     <input type="text" class="form-control" id="last_name" placeholder="Doe" name="last_name">
   </div>
   <div class="form-group">
-    <div class="input-group">
       <label class="sr-only" for="exampleInputEmail2">Email address</label>
-      <div class="input-group-addon">@</div>
       <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Enter email" name="email">
     </div>
-  </div>
   <div class="form-group">
     <label class="sr-only" for="exampleInputPassword2">Password</label>
     <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password" name="password">
