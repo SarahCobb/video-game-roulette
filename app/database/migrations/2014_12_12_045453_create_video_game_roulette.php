@@ -19,7 +19,6 @@ class CreateVideoGameRoulette extends Migration {
 			$table->string('title')->unique();
 			$table->string('platform');
 			$table->string('publisher');
-			$table->text('description');
 			$table->timestamps();
 		});
 
