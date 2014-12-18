@@ -20,7 +20,7 @@ class GamesController extends BaseController
 		
 		# validate user input
 		$rules = array(
-			'title' => 'required',
+			'title' => 'required|unique:games,title',
 			'publisher' => 'required',
 			'platform' => 'required'
 		);
@@ -41,7 +41,8 @@ class GamesController extends BaseController
 	    $game->save();
 
 	    # attach tags
-		$tags = Input::except('_token', 'title', 'platform', 'publisher', 'description');
+		$tags = Input::except('_token', 'title', 'platform', 'publisher', 'save');
+		var_dump($tags);
 		foreach ($tags as $tag => $id) {
 			$tag = Tag::find($id);
 			$game->tags()->attach($tag);
@@ -97,7 +98,7 @@ class GamesController extends BaseController
 	    $game->save();
 
 	    # associate new tags with game
-	    $tags = Input::except('_token', 'title', 'platform', 'publisher', 'description');
+	    $tags = Input::except('_token', 'title', 'platform', 'publisher', 'save');
 		foreach ($tags as $tag => $id) {
 			$tag = Tag::find($id);
 			$game->tags()->attach($tag);
@@ -108,22 +109,26 @@ class GamesController extends BaseController
     		->with('flash_message', 'Game saved.'); 
 	}
 
+	public function get_search() {
+
+		return View::make('search');
+	}
+
 	public function search()
 	{
 		# Query database for games
 		$query = Input::get('query');
-		$all = Input::get('all_games');
 
-		# validate user input
-		$rules = array(
-			'query' => 'required',
-			'all_games' => 'required_without:query'
-		);
+		if (Input::has('search')) {
+			$rules = array(
+			'query' => 'required'
+			);
 
-		$validator = Validator::make(Input::all(), $rules);
-		if($validator->fails()) {
-			return Redirect::action('GamesController@index')
-				->with('flash_message', 'Please enter a search term or choose all games!');
+			$validator = Validator::make(Input::all(), $rules);
+			if($validator->fails()) {
+				return Redirect::action('GamesController@search')
+					->with('flash_message', 'Please enter a search term or choose all games!');
+			}
 		}
 
 		$results = Game::where('title', 'LIKE' , '%' . $query . '%')
@@ -137,8 +142,7 @@ class GamesController extends BaseController
 		} else {
 			return View::make('search_results')
 				->with('results', $results)
-				->with('query', $query)
-				->with('all', $all);
+				->with('query', $query);
 		}
 	}
 
@@ -163,6 +167,12 @@ class GamesController extends BaseController
 			->with('flash_message', 'Game removed from your collection!');
 	}
 
+	public function get_all_games() {
+		$games = Game::all();
+		return View::make('all_games')
+			->with('games', $games);
+	}
+
 	public function get_my_games()
 	{
 		# get all games belonging to authenticated user
@@ -174,7 +184,7 @@ class GamesController extends BaseController
 		})->get();
 		# Pass collection to view
 		if ($games->isEmpty()) {
-			return Redirect::action('GamesController@index')
+			return Redirect::action('GamesController@search')
 				->with('flash_message', 'You have no games :( Why not search for some?');
 		} else {
 			return View::make('games')
@@ -192,21 +202,19 @@ class GamesController extends BaseController
 
 	public function post_roulette()
 	{
+
 		# validate user input
-		$check_if_tags = implode(',', (Tag::all()->lists('name')));
-		$rules = array('all' => 'required_without:' . $check_if_tags);
-		$validator = Validator::make(Input::all(), $rules);
-		if($validator->fails()) {
-			return Redirect::action('GamesController@get_roulette')
-				->with('flash_message', 'Please choose a tag or include all your games!');
-		}
+		if (Input::has('roulette_tags') AND count(Input::all()) == 2) {
+				return Redirect::action('GamesController@get_roulette')
+					->with('flash_message', 'Please select some categories or choose all games!');
+			}
 
 		# get user and tags
 		$id = Auth::id();
-		if (Input::get('all')) {
+		if (Input::has('roulette_all')) {
 			$tags = Tag::all()->lists('id');
 		} else {
-			$tags = Input::except('_token');
+			$tags = Input::except('_token', 'roulette_tags');
 		}
 		
 		# get games with desired tags
@@ -221,18 +229,18 @@ class GamesController extends BaseController
 
         # let the user know if there were no (or 1) games, else show results
         if ($games->isEmpty()) {
-        	return Redirect::action('UserController@get_roulette')
+        	return Redirect::action('GamesController@get_roulette')
         		->with('flash_message', 'No games meet your criteria. Try a different selection, or play with all games.');
         }
 
         # choose a random game from collection
         $rand = rand(0, (count($games) - 1));
         $games->toArray();
-        var_dump($rand);
         $roulette = $games[$rand];
 
         # pass chosen game to results view
         return View::make('roulette_results')
-        	->with('roulette', $roulette);
+        	->with('roulette', $roulette)
+        	->with('games', $games);
 	 }
 }

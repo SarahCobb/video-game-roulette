@@ -5,15 +5,28 @@
 @stop
 
 @section('content')
-<p>login</p>
+<h1>Log In</h1>
 
-{{ Form::open(array('action' => 'UserController@post_login')) }}
-{{ Form::label('Email') }}
-{{ Form::email('email') }}
-{{ Form::label('password', 'Password') }}
-{{ Form::password('password') }}
-{{ Form::submit('Login') }}
-{{ Form::close() }}
+@foreach($errors->all() as $message)
+	<div class='error'>{{ $message }}</div>
+@endforeach
+<br>
+
+<form class="form-inline" role="form" action="{{ action('UserController@post_login') }}" method="POST">
+  {{ Form::token() }}
+  <div class="form-group">
+    <div class="input-group">
+      <label class="sr-only" for="exampleInputEmail2">Email address</label>
+      <div class="input-group-addon">@</div>
+      <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Enter email" name="email">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="sr-only" for="exampleInputPassword2">Password</label>
+    <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password" name="password">
+  </div>
+  <button type="submit" class="btn btn-success">Log In</button>
+</form>
 
 @stop
 

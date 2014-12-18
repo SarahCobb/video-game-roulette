@@ -44,7 +44,6 @@ class UserController extends BaseController
 		
 		# log in user 
 		Auth::login($user);
-		welcome_email($user);
 		return Redirect::action('GamesController@index')
 			->with('flash_message', 'Welcome to Video Game Roulette!');
 	}
