@@ -90,7 +90,7 @@ Route::model('game', 'Game');
 Route::get('/', 'GamesController@index'); # welcome screen with search box
 Route::get('/results', array( 'before' => 'auth', 'uses' => 'GamesController@get_search_results')); # show search results
 Route::get('/create', array( 'before' => 'auth', 'uses' => 'GamesController@get_create')); # show game creation form
-Route::get('/games', 'GamesController@get_all_games');
+Route::get('/games', 'GamesController@get_all_games'); # show all games to guests and search to users
 Route::get('/my-games', array( 'before' => 'auth', 'uses' => 'GamesController@get_my_games')); # show user's game collection
 Route::get('/edit/{id}', array( 'before' => 'auth', 'uses' => 'GamesController@get_edit')); # edit game 
 Route::get('/roulette', array( 'before' => 'auth', 'uses' => 'GamesController@get_roulette')); # show game roulette form
