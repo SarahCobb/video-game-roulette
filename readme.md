@@ -6,7 +6,7 @@ An app where gamers can keep track of their game collections, and get suggestion
 ## Demo  
 [Screencast](http://screencast.com/t/ZmkJoSaLL9)
 ## Notes for TA  
-Guests can only view a list of games. Create an account to see full functionality -- search and add games to you collection, create and edit games, and request a random suggestion for what to play based on game category or console by visiting the 'Roulette' tab.
+Guests can only view a list of games. Create an account to see full functionality -- search and add games to your collection, create and edit games, and request a random suggestion for what to play based on game category or console by visiting the 'Roulette' tab.
 ## Outside Sources  
 [Bootstrap Documentation](http://getbootstrap.com/components)  
 [Google Font Slackey](http://www.google.com/fonts/specimen/Slackey) 
