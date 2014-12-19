@@ -9,8 +9,6 @@ An app where gamers can keep track of their game collections, and get suggestion
 Guests can only view a list of games. Create an account to see full functionality -- search and add games to your collection, create and edit games, and request a random suggestion for what to play based on game category or console by visiting the 'Roulette' tab.  
   
 For CRUD operations, creating, reading and editing are all included. Given that the games are shared, it did not make sense to allow users to completely delete a game from the database that another user might have in their collection. They can be removed from the user's collection, which serves as deleting from the user's perspective. 
-  
-Also saw some instances of fonts not loading due to missing (or stripped out) CORS response headers. Try a different browser if fonts are rendering as standard sans-serif webfonts.
 
 ## Outside Sources  
 [Bootstrap Documentation](http://getbootstrap.com/components)  
